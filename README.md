@@ -5,6 +5,8 @@ Herramienta automatizada para descargar recibos de nómina del portal de Oracle 
 ## Características
 
 - Automatización completa del proceso de login y descarga
+- **Continuación automática desde el último recibo descargado**
+- Renombrado inteligente de archivos con nombres incompletos
 - Manejo seguro de credenciales con variables de entorno
 - Múltiples estrategias para detectar elementos en la página
 - Screenshots automáticos para debugging
@@ -70,6 +72,7 @@ ORACLE_PASSWORD=TuContraseñaAquí
 # Configuración opcional
 HEADLESS=true
 DOWNLOAD_PATH=./downloads
+FORCE_RESTART=false  # true para reiniciar desde el principio, false para continuar
 ```
 
 **IMPORTANTE:**
@@ -83,6 +86,16 @@ DOWNLOAD_PATH=./downloads
 
 ```bash
 poetry run python scraper.py
+```
+
+El script automáticamente **continuará desde el último recibo descargado** si fue interrumpido previamente.
+
+### Reiniciar descarga desde el principio
+
+Si quieres volver a descargar todos los recibos desde cero:
+
+```bash
+FORCE_RESTART=true poetry run python scraper.py
 ```
 
 ### Ver el navegador en acción (debugging)
@@ -151,12 +164,53 @@ Revisa estos archivos en la carpeta `downloads/` para identificar problemas.
 ```
 oracle_payslip_scraper/
 ├── scraper.py              # Script principal
+├── rename_existing_files.py # Script para renombrar archivos existentes
 ├── pyproject.toml          # Dependencias del proyecto
 ├── .env                    # Credenciales (NO SUBIR A GIT)
 ├── .env.example            # Plantilla de credenciales
 ├── .gitignore              # Archivos a ignorar en git
 ├── README.md               # Este archivo
-└── downloads/              # PDFs descargados
+└── downloads/              # Archivos descargados
+    ├── .scraper_progress.json  # Progreso de descarga (auto-generado)
+    ├── pdfs/               # Recibos en PDF
+    └── xmls/               # Recibos en XML
+```
+
+## Sistema de Continuación
+
+El scraper guarda automáticamente su progreso en `.scraper_progress.json`. Si el proceso se interrumpe:
+
+### Ventajas:
+- ✅ **No pierde progreso** si hay un error o interrupción
+- ✅ **Ahorra tiempo** al no redescargar archivos existentes
+- ✅ **Retoma automáticamente** desde el último recibo procesado
+
+### Cómo funciona:
+1. Después de cada descarga exitosa, guarda el índice actual
+2. Al reiniciar, verifica si existe progreso guardado
+3. Continúa desde el último punto guardado
+4. Al completar todo, elimina el archivo de progreso
+
+### Reiniciar manualmente:
+```bash
+# Opción 1: Variable de entorno
+FORCE_RESTART=true poetry run python scraper.py
+
+# Opción 2: Eliminar archivo de progreso
+rm downloads/.scraper_progress.json
+```
+
+## Renombrado de Archivos
+
+Algunos recibos de Oracle se descargan con nombres incompletos (ej: `14.pdf`, `23.xml`). El scraper:
+
+1. **Detecta automáticamente** archivos con solo el número de día
+2. **Extrae la fecha** del contenido del XML de nómina
+3. **Renombra** con el formato completo: `Recibo Nomina YYYY_M_D.ext`
+
+### Para archivos ya descargados:
+```bash
+poetry run python rename_existing_files.py
 ```
 
 ## Troubleshooting
