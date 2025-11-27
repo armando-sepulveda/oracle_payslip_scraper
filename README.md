@@ -86,7 +86,7 @@ cp .env.example .env
 Abre el archivo `.env` y configura tus credenciales:
 
 ```env
-ORACLE_USERNAME=armando.sepulveda@banregio.com
+ORACLE_USERNAME=tu.usuario@empresa.com
 ORACLE_PASSWORD=TuContraseñaAquí
 
 # Configuración opcional

@@ -2,7 +2,7 @@
 name = "oracle-payslip-scraper"
 version = "0.1.0"
 description = "Web scraper para obtener recibos de nómina del portal de Oracle"
-authors = ["Armando Sepulveda <armando.sepulveda@banregio.com>"]
+authors = ["Armando Sepulveda"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
