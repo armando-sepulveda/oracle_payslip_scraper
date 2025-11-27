@@ -1,25 +1,45 @@
-# Oracle Payslip Scraper
+<div align="center">
 
-Herramienta automatizada para descargar recibos de nómina del portal de Oracle Cloud.
+# 🤖 Oracle Payslip Scraper
 
-## Características
+### Automatización Python para descargar recibos de nómina de Oracle Cloud
 
-- Automatización completa del proceso de login y descarga
-- **Continuación automática desde el último recibo descargado**
-- Renombrado inteligente de archivos con nombres incompletos
-- Manejo seguro de credenciales con variables de entorno
-- Múltiples estrategias para detectar elementos en la página
-- Screenshots automáticos para debugging
-- Logging detallado del proceso
-- Modo headless para ejecución en segundo plano
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Playwright](https://img.shields.io/badge/Playwright-1.40+-green.svg)](https://playwright.dev/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Requisitos
+[Características](#-características) •
+[Instalación](#-instalación) •
+[Uso](#-uso) •
+[Continuación](#-sistema-de-continuación)
+
+</div>
+
+---
+
+## 📋 Descripción
+
+Herramienta automatizada para descargar recibos de nómina del portal de Oracle Cloud con continuación automática, renombrado inteligente de archivos y manejo robusto de errores.
+
+## ✨ Características
+
+- 🤖 Automatización completa del proceso de login y descarga
+- 🔄 **Continuación automática desde el último recibo descargado**
+- 📝 Renombrado inteligente de archivos con nombres incompletos
+- 🔒 Manejo seguro de credenciales con variables de entorno
+- 🎯 Múltiples estrategias para detectar elementos en la página
+- 📸 Screenshots automáticos para debugging
+- 📊 Logging detallado del proceso
+- 👻 Modo headless para ejecución en segundo plano
+
+## 🔧 Requisitos
 
 - Python 3.9 o superior
 - Poetry (gestor de dependencias)
 - Conexión a internet
 
-## Instalación
+## 📦 Instalación
 
 ### 1. Instalar Poetry (si no lo tienes)
 
@@ -51,7 +71,7 @@ poetry install
 poetry run playwright install chromium
 ```
 
-## Configuración
+## ⚙️ Configuración
 
 ### 1. Crear archivo de credenciales
 
@@ -80,7 +100,7 @@ FORCE_RESTART=false  # true para reiniciar desde el principio, false para contin
 - Nunca lo subas a git (ya está en .gitignore)
 - Mantén tus credenciales seguras
 
-## Uso
+## 🚀 Uso
 
 ### Modo básico (headless)
 
@@ -176,7 +196,7 @@ oracle_payslip_scraper/
     └── xmls/               # Recibos en XML
 ```
 
-## Sistema de Continuación
+## 🔄 Sistema de Continuación
 
 El scraper guarda automáticamente su progreso en `.scraper_progress.json`. Si el proceso se interrumpe:
 
@@ -200,7 +220,7 @@ FORCE_RESTART=true poetry run python scraper.py
 rm downloads/.scraper_progress.json
 ```
 
-## Renombrado de Archivos
+## 📝 Renombrado de Archivos
 
 Algunos recibos de Oracle se descargan con nombres incompletos (ej: `14.pdf`, `23.xml`). El scraper:
 
